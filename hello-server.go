@@ -1,3 +1,6 @@
+// Credits:
+// https://yourbasic.org/golang/http-server-example/
+
 package main
 
 import (
