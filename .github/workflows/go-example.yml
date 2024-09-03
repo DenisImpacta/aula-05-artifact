@@ -4,7 +4,13 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches: [ "main" ]
 
+  workflow_dispatch:
+  schedule:
+    - cron: "15 0 * * 1-6"  # Executa 15 a 15 minutos de segunda a sábado
+  
 env:
   FILE_NAME: hello-server
 
@@ -13,7 +19,6 @@ jobs:
     name: Build Go
     runs-on: ubuntu-latest
     steps:
-
     - name: Checkout Go code
       uses: actions/checkout@v2
 
