@@ -2,15 +2,13 @@ name: Exemplo de artefato
 
 on:
   push:
-    branches: [ "main" ]
-    schedule:
-      - cron: "*/15 * * * 2-6"  # Executa a cada 15 minutos, de segunda a sábado
-  pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
+
   workflow_dispatch:
   schedule:
-    - cron: "0 0 * * 2-6"  # Executa à meia-noite (UTC) de terça a sábado
-    
+    - cron: "*/15 * * * 1-6"  # Executa 15 a 15 minutos de segunda a sábado
+     
 env:
   FILE_NAME: hello-server
   
@@ -47,29 +45,3 @@ jobs:
           path: ./${{env.FILE_NAME}}.exe
           if-no-files-found: warn
           overwrite: true
-
-  download-and-run-linux:
-    name: Download and run Linux
-    runs-on: ubuntu-latest
-    needs: build-go
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-      - name: Download Linux Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: linux
-      - name: Run Script
-        run: source ./run.sh
-
-  download-only-windows:
-    name: Download Windows
-    runs-on: windows-latest
-    needs: build-go
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-      - name: Download Windows Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: windows
