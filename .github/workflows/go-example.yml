@@ -16,18 +16,24 @@ jobs:
   build-go:
     name: Build GO
     runs-on: ubuntu-latest
+    
     steps:
     - name: Checkout GO Code
       uses: actions/checkout@v4
+      
     - name: Set up Go
       uses: actions/setup-go@v5.0.2  
+      
     - name: Build ${{env.FILE_NAME}} for ubuntu-latest
       run: go build ${{env.FILE_NAME}}.go
+      
     - name: Build ${{env.FILE_NAME}} for windows-latest
       run: GOOS=windows GOARCH=amd64 go build ${{env.FILE_NAME}}.go
     
   upload-job-linux:
+    name: Upload Job Linux
     runs-on: ubuntu-latest
+    
     steps:
       - name: Upload artefato no linux
         uses: actions/upload-artifact@v1.0.0
