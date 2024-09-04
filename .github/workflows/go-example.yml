@@ -5,8 +5,7 @@ env:
   
 on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
 
   workflow_dispatch:
   schedule:
@@ -18,8 +17,8 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-   # - name: Checkout GO Code
-   #   uses: actions/checkout@v4
+    - name: Checkout GO Code
+      uses: actions/checkout@v4
       
     - name: Set up Go
       uses: actions/setup-go@v5.0.2  
