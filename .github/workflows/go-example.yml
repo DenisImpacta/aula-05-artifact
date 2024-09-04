@@ -19,6 +19,8 @@ jobs:
     steps:
     - name: Checkout Go code
       uses: actions/checkout@v4
+    - name: Set up Go
+      uses: actions/setup-go@v5.0.2  
     - name: Build ${{ env.FILE_NAME }} for ubuntu-latest
       run: go build ${{ env.FILE_NAME }}.go
     - name: Build ${{ env.FILE_NAME }} for windows-latest
