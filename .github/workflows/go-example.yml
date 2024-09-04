@@ -1,5 +1,8 @@
 name: Exemplo de artefato
-
+   
+env:
+  FILE_NAME: hello-server
+  
 on:
   push:
     branches:
@@ -8,9 +11,6 @@ on:
   workflow_dispatch:
   schedule:
     - cron: "*/15 * * * 1-6"  # Executa 15 a 15 minutos de segunda a sábado
-     
-env:
-  FILE_NAME: hello-server
   
 jobs:
   build-go:
