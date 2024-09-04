@@ -41,3 +41,5 @@ jobs:
         with:
           name: windows
           path: ./${{ env.FILE_NAME }}.exe
+          if-no-files-found: warn
+          overwrite: true
