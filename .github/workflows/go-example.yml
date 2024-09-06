@@ -1,4 +1,4 @@
-name: Exemplo de artefato
+name: Go Hello-Server
    
 env:
   FILE_NAME: hello-server
