@@ -1,4 +1,4 @@
-name: Go Hello-Server
+name: Go Artefato Hello-Server
    
 env:
   FILE_NAME: hello-server
