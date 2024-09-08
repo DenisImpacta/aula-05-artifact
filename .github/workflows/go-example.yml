@@ -16,60 +16,59 @@ jobs:
       FILE_NAME: hello-server
     
     steps:
-    - name: Checkout GO Code
-      uses: actions/checkout@v4
-    - name: Set up Go
-      uses: actions/setup-go@v5.0.2        
-    - name: Build ${{env.FILE_NAME}} for ubuntu-latest
-      run: go build ${{env.FILE_NAME}}.go
-    - name: Build ${{env.FILE_NAME}} for windows-latest
-      run: GOOS=windows GOARCH=amd64 go build ${{env.FILE_NAME}}.go
-    
-  upload-job-linux:
-    name: Upload Job Linux
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: Upload artifact for linux
-      uses: actions/upload-artifact@v4.4.0
-      with:
-        name: linux
-        path: ./${{ env.FILE_NAME }}
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 
-  upload-job-windows:
-    runs-on: windows-latest
-    
-    steps:
-      - name: Upload artefato no windows
-        uses: actions/upload-artifact@v4.4.0
+      - name: Build for Linux
+        run: go build ${{ env.FILE_NAME }}.go
+
+      - name: Build for Windows
+        run: GOOS=windows GOARCH=amd64 go build ${{ env.FILE_NAME }}.go
+
+      - name: Upload artifact for Linux
+        uses: actions/upload-artifact@v1.0.0
+        with:
+          name: linux
+          path: ./${{ env.FILE_NAME }}
+
+      - name: Upload artifact for Windows
+        uses: actions/upload-artifact@v1.0.0
         with:
           name: windows
           path: ./${{ env.FILE_NAME }}.exe
 
   download-and-run-linux:
-    name: Download and run Linux
     runs-on: ubuntu-latest
     needs: build-go
-    
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
       - name: Download Linux Artifact
-        uses: actions/download-artifact@v4.1.8
+        uses: actions/download-artifact@v2
         with:
           name: linux
+
+      - name: List files in current directory
+        run: ls -la
+
+      - name: Make run.sh executable
+        run: chmod +x ./run.sh
+
       - name: Run Script
-        run: source ./run.sh
+        run: ./run.sh
 
   download-only-windows:
-    name: Download Windows
     runs-on: windows-latest
     needs: build-go
-    
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
       - name: Download Windows Artifact
-        uses: actions/download-artifact@v4.1.8
+        uses: actions/download-artifact@v2
         with:
           name: windows
+
+      - name: List files in current directory
+        run: dir
