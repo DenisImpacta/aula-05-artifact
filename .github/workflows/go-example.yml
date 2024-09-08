@@ -1,7 +1,4 @@
 name: Go Artefato Hello-Server
-   
-env:
-  FILE_NAME: hello-server
   
 on:
   push:
@@ -9,23 +6,22 @@ on:
 
   workflow_dispatch:
   schedule:
-    - cron: "*/15 * * * 1-6"  # Executa 15 a 15 minutos de segunda a sábado
+    - cron: '*/15 * * * 1-6'  # Executa 15 a 15 minutos de segunda a sábado
   
 jobs:
   build-go:
     name: Build GO
     runs-on: ubuntu-latest
+    env:
+      FILE_NAME: hello-server
     
     steps:
     - name: Checkout GO Code
       uses: actions/checkout@v4
-      
     - name: Set up Go
-      uses: actions/setup-go@v5.0.2  
-      
+      uses: actions/setup-go@v5.0.2        
     - name: Build ${{env.FILE_NAME}} for ubuntu-latest
       run: go build ${{env.FILE_NAME}}.go
-      
     - name: Build ${{env.FILE_NAME}} for windows-latest
       run: GOOS=windows GOARCH=amd64 go build ${{env.FILE_NAME}}.go
     
@@ -48,7 +44,7 @@ jobs:
         uses: actions/upload-artifact@v4.4.0
         with:
           name: windows
-          path: ./${{env.FILE_NAME}}.exe
+          path: ./${{ env.FILE_NAME }}.exe
 
   download-and-run-linux:
     name: Download and run Linux
